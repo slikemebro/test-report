@@ -4,11 +4,11 @@ import com.ua.hlibkorobov.testreport.exception.IncorrectTimeRangeException;
 import com.ua.hlibkorobov.testreport.exception.StatisticByDateNotFoundException;
 import com.ua.hlibkorobov.testreport.pojo.byDate.SalesAndTrafficByDate;
 import com.ua.hlibkorobov.testreport.repository.SalesAndTrafficByDateRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class SalesAndTrafficByDateServiceImplTest {
 
     @Mock
@@ -33,11 +34,6 @@ class SalesAndTrafficByDateServiceImplTest {
 
     @InjectMocks
     private SalesAndTrafficByDateServiceImpl salesAndTrafficByDateService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void saveAll() {

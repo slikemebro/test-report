@@ -8,11 +8,11 @@ import com.ua.hlibkorobov.testreport.repository.StatisticByAsinRepository;
 import com.ua.hlibkorobov.testreport.repository.StatisticByDateRepository;
 import com.ua.hlibkorobov.testreport.service.SalesAndTrafficByAsinService;
 import com.ua.hlibkorobov.testreport.service.SalesAndTrafficByDateService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -20,11 +20,11 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class StatisticServiceImplTest {
 
     @Mock
@@ -41,11 +41,6 @@ class StatisticServiceImplTest {
 
     @InjectMocks
     private StatisticServiceImpl statisticService;
-
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testGetStatisticByDate() {

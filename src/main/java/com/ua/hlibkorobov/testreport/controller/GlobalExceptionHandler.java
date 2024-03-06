@@ -1,7 +1,7 @@
 package com.ua.hlibkorobov.testreport.controller;
 
-import com.ua.hlibkorobov.testreport.exception.DocumentNotFoundException;
-import com.ua.hlibkorobov.testreport.exception.IncorrectTimeRangeException;
+import com.ua.hlibkorobov.testreport.exception.StatisticByDateNotFoundException;
+import com.ua.hlibkorobov.testreport.exception.StatisticByAsinNotFoundException;
 import com.ua.hlibkorobov.testreport.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
@@ -22,7 +22,6 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
-
 
     @ExceptionHandler
     public ResponseEntity<?> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
@@ -48,15 +47,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
     @ExceptionHandler
-    public ResponseEntity<?> handleDocumentNotFoundException(DocumentNotFoundException e) {
+    public ResponseEntity<?> handleStatisticByDateNotFoundException(StatisticByDateNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
     @ExceptionHandler
-    public ResponseEntity<?> handleIncorrectTimeRangeException(IncorrectTimeRangeException e) {
+    public ResponseEntity<?> handleStatisticByAsinNotFoundException(StatisticByAsinNotFoundException e) {
         log.error(e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
-
 
 }

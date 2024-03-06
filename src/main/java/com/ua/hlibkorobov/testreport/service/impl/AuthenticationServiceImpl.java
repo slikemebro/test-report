@@ -22,6 +22,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * This method is used to register a new user
+     * and return a token for the user
+     * @param request - request with user data
+     * @return - response with token
+     */
     @Override
     public AuthenticationResponse register(RegisterRequest request) {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -40,6 +46,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
+    /**
+     * This method is used to authenticate a user
+     * and return a token for the user
+     * @param request - request with user data
+     * @return - response with token
+     */
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(

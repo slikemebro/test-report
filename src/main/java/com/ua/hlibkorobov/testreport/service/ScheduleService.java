@@ -5,8 +5,9 @@ import jakarta.annotation.PreDestroy;
 import org.springframework.scheduling.annotation.Scheduled;
 
 public interface ScheduleService {
+
     @Scheduled(cron = "${interval-in-cron}")
-    void checkForNewData();
+    void updateToNewData();
 
     @PostConstruct
     void init();

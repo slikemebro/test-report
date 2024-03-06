@@ -5,6 +5,9 @@ import com.ua.hlibkorobov.testreport.pojo.byDate.sale.OrderedProductSalesB2B;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Base class for sales
+ */
 @Getter
 @Setter
 public abstract class BaseSale {

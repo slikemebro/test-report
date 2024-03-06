@@ -13,7 +13,6 @@ import com.ua.hlibkorobov.testreport.repository.StatisticByDateRepository;
 import com.ua.hlibkorobov.testreport.service.SalesAndTrafficByAsinService;
 import com.ua.hlibkorobov.testreport.service.SalesAndTrafficByDateService;
 import com.ua.hlibkorobov.testreport.service.StatisticService;
-import com.ua.hlibkorobov.testreport.service.TestReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
@@ -33,8 +32,13 @@ public class StatisticServiceImpl implements StatisticService {
     private final StatisticByAsinRepository statisticByAsinRepository;
     private final SalesAndTrafficByDateService salesAndTrafficByDateService;
     private final SalesAndTrafficByAsinService salesAndTrafficByAsinService;
-    private final TestReportService testReportService;
 
+    /**
+     * Get statistic by date and cache it
+     *
+     * @param date - date to find statistic
+     * @return StatisticByDate
+     */
     @Cacheable(value = "statisticByDate", key = "#date")
     @Override
     public StatisticByDate getStatisticByDate(LocalDate date) {
@@ -48,6 +52,13 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticByDateRepository.save(statisticByDate);
     }
 
+    /**
+     * Get statistic from date to date and cache it
+     *
+     * @param fromDate - start date to find statistic
+     * @param toDate   - end date to find statistic
+     * @return StatisticByDate
+     */
     @Cacheable(value = "statisticFromToDate", key = "#fromDate.toString() + #toDate.toString()")
     @Override
     public StatisticByDate getStatisticFromDateToDate(LocalDate fromDate, LocalDate toDate) {
@@ -60,6 +71,11 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticByDateRepository.save(statisticByDate);
     }
 
+    /**
+     * Get all statistic by date and cache it
+     *
+     * @return StatisticByDate
+     */
     @Cacheable(value = "allStatisticByDate")
     @Override
     public StatisticByDate getAllStatisticByDate() {
@@ -69,6 +85,12 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticByDateRepository.save(statisticByDate);
     }
 
+    /**
+     * Get statistic by asin and cache it
+     *
+     * @param asin - asin to find statistic
+     * @return StatisticByAsin
+     */
     @Cacheable(value = "statisticByAsin", key = "#asin")
     @Override
     public StatisticByAsin getStatisticByAsin(String asin) {
@@ -83,6 +105,12 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticByAsinRepository.save(statisticByAsin);
     }
 
+    /**
+     * Get statistic of asins and cache it
+     *
+     * @param asins - asins to find statistic
+     * @return StatisticByAsin
+     */
     @Cacheable(value = "statisticByAsins", key = "#asins.toString()")
     @Override
     public StatisticByAsin getStatisticOfAsins(List<String> asins) {
@@ -94,6 +122,11 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticByAsinRepository.save(statisticByAsin);
     }
 
+    /**
+     * Get all statistic by asin and cache it
+     *
+     * @return StatisticByAsin
+     */
     @Cacheable(value = "allStatisticByAsin")
     @Override
     public StatisticByAsin getAllStatisticByAsin() {
@@ -128,16 +161,24 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticByAsin;
     }
 
-
+    /**
+     * Sum fields of sumObject and currentObject by Reflection Api
+     *
+     * @param sumObject     - object to sum fields
+     * @param currentObject - object to sum fields
+     */
     private void sumFields(Object sumObject, Object currentObject) {
+        if (currentObject == null) {
+            return;
+        }
         Class<?> clazz = currentObject.getClass();
 
         while (clazz != null) {
             for (Field field : clazz.getDeclaredFields()) {
                 field.setAccessible(true);
 
-                Object sumValue = null;
-                Object currentValue = null;
+                Object sumValue;
+                Object currentValue;
                 try {
                     sumValue = field.get(sumObject);
                     currentValue = field.get(currentObject);

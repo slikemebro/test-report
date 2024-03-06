@@ -8,8 +8,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
-public interface StatisticByDateRepository
-        extends MongoRepository<StatisticByDate, String> {
+public interface StatisticByDateRepository extends MongoRepository<StatisticByDate, String> {
 
-    Optional<StatisticByDate> findByDate(LocalDate date);
 }

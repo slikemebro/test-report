@@ -15,4 +15,6 @@ public interface SalesAndTrafficByAsinService {
     List<SalesAndTrafficByAsin> findAll();
 
     List<SalesAndTrafficByAsin> findByAsins(List<String> asins);
+
+    List<SalesAndTrafficByAsin> update(List<SalesAndTrafficByAsin> list);
 }

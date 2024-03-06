@@ -37,13 +37,19 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final SalesAndTrafficByAsinService salesAndTrafficByAsinService;
     private final CacheManager cacheManager;
 
+    /**
+     * Method to update data each 5 minutes.
+     */
     @Override
     @Scheduled(cron = "${interval-in-cron}")
-    public void checkForNewData() {
+    public void updateToNewData() {
         log.info("Update date each 5 minutes.");
         updateData();
     }
 
+    /**
+     * Method to initialize data to db.
+     */
     @Override
     @PostConstruct
     public void init() {
@@ -74,6 +80,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
     }
 
+    /**
+     * Method to start watch service for file changes.
+     * If file was modified, then update data.
+     */
     private void startWatchService() {
         try {
             WatchService watchService = FileSystems.getDefault().newWatchService();
@@ -109,6 +119,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
     }
 
+    /**
+     * Method to update data in db.
+     * And clear cache.
+     */
     @Override
     public void updateData() {
         log.info("update Data");
@@ -116,10 +130,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         TestReport testReport = getTestReport();
         testReportService.update(testReport);
-        salesAndTrafficByDateService.deleteAll();
+        salesAndTrafficByDateService.update(Arrays.asList(testReport.getSalesAndTrafficByDate()));
         salesAndTrafficByAsinService.deleteAll();
-        salesAndTrafficByDateService.saveAll(Arrays.asList(testReport.getSalesAndTrafficByDate()));
         salesAndTrafficByAsinService.saveAll(Arrays.asList(testReport.getSalesAndTrafficByAsin()));
+        salesAndTrafficByAsinService.update(Arrays.asList(testReport.getSalesAndTrafficByAsin()));
     }
 
     private void clearCache() {
@@ -128,6 +142,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
     }
 
+    /**
+     * Method to destroy ScheduleService and delete all data from db.
+     */
     @Override
     @PreDestroy
     public void destroy() {

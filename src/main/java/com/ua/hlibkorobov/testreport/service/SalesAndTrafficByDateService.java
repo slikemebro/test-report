@@ -16,4 +16,6 @@ public interface SalesAndTrafficByDateService {
     List<SalesAndTrafficByDate> findBetweenDates(LocalDate startDate, LocalDate endDate);
 
     List<SalesAndTrafficByDate> findAll();
+
+    List<SalesAndTrafficByDate> update(List<SalesAndTrafficByDate> list);
 }

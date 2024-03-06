@@ -26,6 +26,17 @@ public class JwtAthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtUtils jwtUtils;
 
+    /**
+     * This method is used to filter the request and response.
+     * If the token is valid, the user is authenticated.
+     * If the token is not valid, the user is not authenticated.
+     * If user is valid and not authenticated, will be generated token.
+     * @param request - request from the client
+     * @param response - response from the server
+     * @param filterChain - filter chain for the request and response
+     * @throws ServletException - throws this exception if there is a problem with the servlet
+     * @throws IOException - throws this exception if there is a problem with the input/output
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,

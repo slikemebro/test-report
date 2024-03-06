@@ -16,17 +16,37 @@ import java.util.function.Function;
 @Service
 public class JwtUtils {
 
+    /**
+     * Secret key for JWT
+     */
     @Value("${jwt.secret}")
     private String secretKey;
 
+    /**
+     * Extract username from token
+     * @param token - JWT token
+     * @return username
+     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Extract expiration date from token
+     * @param token - JWT token
+     * @return expiration date
+     */
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    /**
+     * Extract claim from token
+     * @param token - JWT token
+     * @param claimsResolver - function to extract claim
+     * @return claim
+     * @param <T> - type of claim
+     */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -40,6 +60,11 @@ public class JwtUtils {
         return extractExpiration(token).before(new Date());
     }
 
+    /**
+     * Generate token for user
+     * @param userDetails - user details
+     * @return JWT token
+     */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails);

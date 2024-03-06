@@ -1,8 +1,10 @@
 package com.ua.hlibkorobov.testreport.controller;
 
-import com.ua.hlibkorobov.testreport.exception.StatisticByDateNotFoundException;
+import com.ua.hlibkorobov.testreport.exception.SalesAndTrafficByAsinNotFoundException;
 import com.ua.hlibkorobov.testreport.exception.StatisticByAsinNotFoundException;
+import com.ua.hlibkorobov.testreport.exception.StatisticByDateNotFoundException;
 import com.ua.hlibkorobov.testreport.exception.UserNotFoundException;
+import com.ua.hlibkorobov.testreport.exception.IncorrectTimeRangeException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -46,13 +48,25 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
+
     @ExceptionHandler
     public ResponseEntity<?> handleStatisticByDateNotFoundException(StatisticByDateNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+
     @ExceptionHandler
     public ResponseEntity<?> handleStatisticByAsinNotFoundException(StatisticByAsinNotFoundException e) {
+        log.error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+    @ExceptionHandler
+    public ResponseEntity<?> handleIncorrectTimeRangeException(IncorrectTimeRangeException e) {
+        log.error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+    @ExceptionHandler
+    public ResponseEntity<?> handleSalesAndTrafficByAsinNotFoundException(SalesAndTrafficByAsinNotFoundException e) {
         log.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }

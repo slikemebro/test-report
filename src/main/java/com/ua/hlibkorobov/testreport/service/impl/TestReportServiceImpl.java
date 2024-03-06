@@ -16,12 +16,14 @@ public class TestReportServiceImpl implements TestReportService {
 
     @Override
     public TestReport save(TestReport testReport) {
+        log.info("Save test report");
         return testReportRepository.save(testReport);
     }
 
     @Override
     public void deleteAll() {
         testReportRepository.deleteAll();
+        log.info("Delete all test reports");
     }
 
     @Override

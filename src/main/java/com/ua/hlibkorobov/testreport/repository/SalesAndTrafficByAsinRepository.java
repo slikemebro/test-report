@@ -5,11 +5,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SalesAndTrafficByAsinRepository extends MongoRepository<SalesAndTrafficByAsin, String> {
 
-        SalesAndTrafficByAsin findByParentAsin(String asin);
+    Optional<SalesAndTrafficByAsin> findByParentAsin(String asin);
 
-        List<SalesAndTrafficByAsin> findByParentAsinIn(List<String> asins);
+    List<SalesAndTrafficByAsin> findByParentAsinIn(List<String> asins);
 }

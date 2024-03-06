@@ -1,6 +1,5 @@
 package com.ua.hlibkorobov.testreport.pojo.byAsin;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ua.hlibkorobov.testreport.pojo.base.BaseTraffic;
 import lombok.Getter;
 import lombok.Setter;

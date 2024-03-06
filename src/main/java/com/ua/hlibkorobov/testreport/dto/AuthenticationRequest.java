@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Dto for authentication request
+ */
 @Getter
 @Setter
-@NoArgsConstructor
 public class AuthenticationRequest {
 
     private String email;

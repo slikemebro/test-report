@@ -5,6 +5,9 @@ import com.ua.hlibkorobov.testreport.pojo.byAsin.SalesAndTrafficByAsin;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * This class is a POJO for statistic by ASIN
+ */
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
